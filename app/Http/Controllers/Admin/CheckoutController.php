@@ -20,4 +20,11 @@ class CheckoutController extends Controller
         $request->session()->flash('success', "Checkout with ID {$checkout->id} has been updated!");
         return redirect(route('admin.dashboard'));
     }
+
+    public function destroy($id)
+    {
+        Checkout::where('id', $id)->delete();
+        return redirect()->back();
+    }
+
 }

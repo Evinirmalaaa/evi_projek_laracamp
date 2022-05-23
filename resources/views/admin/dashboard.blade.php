@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-8 offset-2">
-                <div class="card">
+    <div class="container mt-5">
+      
+          
+                <div class="card table-responsive">
                     <div class="card-header">
                         My Camps
                     </div>
@@ -35,13 +35,21 @@
                                                 <span class="badge bg-warning">Waiting</span>
                                             @endif
                                         </td>
+                                        @if (!$checkout->is_paid)
                                         <td>
-                                            @if (!$checkout->is_paid)
+                                            
                                                 <form action="{{route('admin.checkout.update', $checkout->id)}}" method="post">
                                                     @csrf
                                                     <button class="btn btn-primary btn-sm">Set to Paid</button>
                                                 </form>
-                                            @endif
+                                           
+                                        </td>
+                                        @endif
+                                        <td>
+                                            <a href="/delete_checkout/{{  $checkout->id }}">
+                                                <button type="button" class="btn btn-danger">Hapus</button>
+                                            </a>
+                                            
                                         </td>
                                     </tr>
                                 @empty
@@ -54,7 +62,27 @@
                         </table>
                     </div>
                 </div>
-            </div>
-        </div>
+                <form action="/upload_gambar" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalcarouselLabel">Input Gambar</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label">Pilih Foto</label>
+                                    <input class="form-control" type="file" name="foto" id="formFile">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" value="Upload" class="btn btn-primary">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+       
     </div>
 @endsection
